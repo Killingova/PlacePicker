@@ -19,7 +19,7 @@ function Modal({ open, children, onClose }) {
     // Dialog-Element mit der Klasse "modal" und dem Ref `dialog`
     // Hinzufügen der `onClose`-Eigenschaft, um auf das Schließen des Dialogs zu reagieren
     <dialog className="modal" ref={dialog} onClose={onClose}>
-      {children} {/* Einfügen der Kinderkomponenten */}
+      {open ? children : null} {/* Einfügen der Kinderkomponenten */}
     </dialog>,
     document.getElementById('modal') // Modal-Inhalte werden im DOM-Element mit der ID 'modal' gerendert
   );
