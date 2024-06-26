@@ -67,23 +67,24 @@ function App() {
     }
   }
 
-  const handleRemovePlace = useCallback(  
-    // Funktion zum Entfernen eines Ortes aus den ausgewählten Orten
-    function handleRemovePlace() {
-      setPickedPlaces((prevPickedPlaces) =>
-        prevPickedPlaces.filter((place) => place.id !== selectedPlace.current) // Entfernen des Ortes aus den ausgewählten Orten
-      );
-  
-      // setModalIsOpen(false); // Schließen des Modals
-  
-      // Abrufen der gespeicherten IDs aus dem localStorage
-      const storedIds = JSON.parse(localStorage.getItem('selectedPlaces')) || [];
-      // Entfernen der ID des ausgewählten Ortes aus den gespeicherten IDs und Speichern im localStorage
-      localStorage.setItem(
-        'selectedPlaces', 
-        JSON.stringify(storedIds.filter((id) => id !== selectedPlace.current))
-      );
-    }, []);
+  // Funktion zum Entfernen eines Ortes aus den ausgewählten Orten
+  const handleRemovePlace = useCallback(() => {
+    if (!selectedPlace.current) return; // Sicherstellen, dass `selectedPlace.current` gesetzt ist
+
+    setPickedPlaces((prevPickedPlaces) =>
+      prevPickedPlaces.filter((place) => place.id !== selectedPlace.current) // Entfernen des Ortes aus den ausgewählten Orten
+    );
+
+    setModalIsOpen(false); // Schließen des Modals
+
+    // Abrufen der gespeicherten IDs aus dem localStorage
+    const storedIds = JSON.parse(localStorage.getItem('selectedPlaces')) || [];
+    // Entfernen der ID des ausgewählten Ortes aus den gespeicherten IDs und Speichern im localStorage
+    localStorage.setItem(
+      'selectedPlaces', 
+      JSON.stringify(storedIds.filter((id) => id !== selectedPlace.current))
+    );
+  }, []);
 
   return (
     <>

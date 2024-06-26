@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 
-export default function ProgressBar({timer}) {
-    const [remainingTime, setRemainingTime] = useState(timer);
+export default function ProgressBar({ timer }) {
+  const [remainingTime, setRemainingTime] = useState(timer);
 
-     // useEffect-Hook für das Intervall
+  // useEffect-Hook für das Intervall
   useEffect(() => {
     // Setzen eines Intervalls, das alle 10 Millisekunden ausgeführt wird
     const interval = setInterval(() => {
@@ -18,6 +18,6 @@ export default function ProgressBar({timer}) {
     };
   }, []); // Leeres Abhängigkeitsarray bedeutet, dass dieser Effekt nur beim ersten Rendern ausgeführt wird
 
-   {/* Fortschrittsbalken, der den verbleibenden Zeitwert anzeigt */}
-   return <progress value={remainingTime} max={timer} />
+  // Fortschrittsbalken, der den verbleibenden Zeitwert anzeigt
+  return <progress value={remainingTime} max={timer} />;
 }
