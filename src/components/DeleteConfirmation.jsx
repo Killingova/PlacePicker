@@ -1,19 +1,28 @@
-import { useEffect } from "react";
+import { useEffect} from "react";
+import ProgressBar from "./ProgressBar.jsx";
+
+const TIMER = 3000; 
 
 // `DeleteConfirmation`-Komponente, die zwei Funktionen `onConfirm` und `onCancel` als Props empfängt
 export default function DeleteConfirmation({ onConfirm, onCancel }) {
-useEffect(()=> {
-  console.log('TIMER SET');
-  const timer = setTimeout(()=>{
-    onConfirm();
-  }, 3000);
 
-  return () => {
-    console.log('Cleaning up timer');
-    clearTimeout(timer);
-  }
-},[]);
 
+ 
+
+  // useEffect-Hook für den Timer
+  useEffect(() => {
+    console.log('TIMER SET');
+    // Setzen eines Timers, der nach `TIMER` Millisekunden die `onConfirm`-Funktion aufruft
+    const timer = setTimeout(() => {
+      onConfirm();
+    }, TIMER);
+
+    // Cleanup-Funktion, die den Timer löscht, wenn die Komponente unmontiert wird oder der Effekt neu ausgeführt wird
+    return () => {
+      console.log('Cleaning up timer');
+      clearTimeout(timer);
+    };
+  }, [onConfirm]); // Abhängigkeit `onConfirm`, d.h. dieser Effekt wird erneut ausgeführt, wenn sich `onConfirm` ändert
 
   return (
     // Haupt-Container für die Bestätigungsnachricht
@@ -33,6 +42,7 @@ useEffect(()=> {
           Yes
         </button>
       </div>
+     <ProgressBar timer={TIMER}/>
     </div>
   );
 }

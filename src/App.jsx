@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, useCallback } from 'react';
 import Places from './components/Places.jsx';
 import { AVAILABLE_PLACES } from './data.js';
 import Modal from './components/Modal.jsx';
@@ -67,22 +67,23 @@ function App() {
     }
   }
 
-  // Funktion zum Entfernen eines Ortes aus den ausgewählten Orten
-  function handleRemovePlace() {
-    setPickedPlaces((prevPickedPlaces) =>
-      prevPickedPlaces.filter((place) => place.id !== selectedPlace.current) // Entfernen des Ortes aus den ausgewählten Orten
-    );
-
-    setModalIsOpen(false); // Schließen des Modals
-
-    // Abrufen der gespeicherten IDs aus dem localStorage
-    const storedIds = JSON.parse(localStorage.getItem('selectedPlaces')) || [];
-    // Entfernen der ID des ausgewählten Ortes aus den gespeicherten IDs und Speichern im localStorage
-    localStorage.setItem(
-      'selectedPlaces', 
-      JSON.stringify(storedIds.filter((id) => id !== selectedPlace.current))
-    );
-  }
+  const handleRemovePlace = useCallback(  
+    // Funktion zum Entfernen eines Ortes aus den ausgewählten Orten
+    function handleRemovePlace() {
+      setPickedPlaces((prevPickedPlaces) =>
+        prevPickedPlaces.filter((place) => place.id !== selectedPlace.current) // Entfernen des Ortes aus den ausgewählten Orten
+      );
+  
+      // setModalIsOpen(false); // Schließen des Modals
+  
+      // Abrufen der gespeicherten IDs aus dem localStorage
+      const storedIds = JSON.parse(localStorage.getItem('selectedPlaces')) || [];
+      // Entfernen der ID des ausgewählten Ortes aus den gespeicherten IDs und Speichern im localStorage
+      localStorage.setItem(
+        'selectedPlaces', 
+        JSON.stringify(storedIds.filter((id) => id !== selectedPlace.current))
+      );
+    }, []);
 
   return (
     <>
